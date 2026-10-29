@@ -1,0 +1,95 @@
+* { box-sizing: border-box; }
+html { -webkit-tap-highlight-color: transparent; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-family, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif;
+  background: #071616;
+  color: #e8f2f2;
+  line-height: 1.5;
+}
+.shell { max-width: 720px; margin: 0 auto; padding: 8px 4px; }
+.bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 10px 6px; border-bottom: 1px solid #164a4a;
+  background: #0b2a2a; position: sticky; top: 0; z-index: 5;
+}
+.brand { font-weight: 700; letter-spacing: 0.5px; color: #7fd9c9; }
+.clock { font-variant-numeric: tabular-nums; color: #cfebea; font-size: 0.95rem; }
+.mkt { font-size: 0.85rem; color: #7fd9c9; }
+
+.toast {
+  background: #0e4a4a; border: 1px solid #2a7a7a; color: #dff6f2;
+  padding: 10px 12px; border-radius: 8px; margin: 10px 4px; font-size: 0.9rem;
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+}
+.toast.hidden { display: none; }
+.btn {
+  border: none; border-radius: 8px; padding: 8px 14px; font-size: 0.9rem;
+  cursor: pointer; font-weight: 600; background: #14b8a6; color: #031f1f;
+}
+.btn:hover { background: #2ecbac; }
+.btn.small { padding: 6px 10px; font-size: 0.8rem; }
+.btn.ghost { background: transparent; color: #7fd9c9; border: 1px solid #2a7a7a; color: #7fd9c9; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.ring {
+  background: #7a1f1f; border: 1px solid #a33; color: #fecaca;
+  padding: 10px 12px; border-radius: 8px; margin: 8px 4px; font-weight: 700;
+  animation: blink 1.2s infinite; display: none;
+}
+.ring.hidden { display: none; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+nav.tabs {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px;
+  background: #0b2a2a; border-bottom: 1px solid #164a4a;
+}
+.tab {
+  border: none; background: transparent; color: #8cc9c9; font-size: 0.78rem;
+  padding: 10px 2px; cursor: pointer; border-bottom: 2px solid transparent;
+}
+.tab.active { color: #7fd9c9; border-bottom-color: #7fd9c9; font-weight: 700; }
+.tab:focus { outline: 2px solid #7fd9c9; }
+
+main.panels { padding: 4px 2px 60px; }
+.panel { display: none; }
+.panel.active { display: block; }
+h2 { margin: 0 0 8px; font-size: 1.05rem; color: #cfebea; }
+h2 button { float: none; font-weight: 600; }
+
+p.muted { color: #8cc9c9; font-size: 0.82rem; margin: 4px 0 10px; }
+
+.card {
+  background: #0b2a2a; border: 1px solid #164a4a; border-radius: 10px;
+  padding: 12px; margin: 0 0 10px;
+}
+.card.hidden { display: none; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+@media (max-width: 420px) { .row3 { grid-template-columns: 1fr 1fr; } }
+
+label { display: block; font-size: 0.78rem; color: #8cc9c9; margin: 0 0 4px; }
+input, select, textarea {
+  width: 100%; background: #051a1a; border: 1px solid #2a7a7a; color: #cfebea;
+  border-radius: 6px; padding: 8px; font-size: 0.95rem;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid #7fd9c9; border-color: #7fd9c9; }
+
+.list { background: #0b2a2a; border: 1px solid #164a4a; border-radius: 10px; padding: 8px; font-size: 0.9rem; }
+.row {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 6px; align-items: center;
+  padding: 6px 4px; border-bottom: 1px solid #123c3c;
+}
+.row:last-child { border-bottom: none; }
+.kpi { background: #071616; border: 1px solid #164a4a; border-radius: 8px; padding: 8px 6px; text-align: center; }
+.kpi-label { font-size: 0.7rem; color: #8cc9c9; text-transform: uppercase; letter-spacing: 0.4px; }
+.kpi-value { font-size: 1.05rem; font-weight: 700; color: #7fd9c9; font-variant-numeric: tabular-nums; }
+
+.status { font-weight: 700; text-transform: uppercase; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; }
+.status.triggered { background: #1b5e20; color: #a5f4a2; }
+.status.waiting { background: #5e4b1b; color: #ffe082; }
+.status.expired { background: #5e1b1b; color: #ffab91; }
+.status.no-data { background: #1f3a3a; color: #8cc9c9; }
+.status.error { background: #3a1f1f; color: #f5b7b1; }
+
+.small-note { font-size: 0.78rem; color: #8cc9c9; }

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0e4a4a">
+<title>TraderAPK — Indian Stock Trader</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="shell">
+  <!-- header: market clock + status -->
+  <header class="bar">
+    <div class="brand">\u20B9 TraderAPK</div>
+    <div id="clock" class="clock">--:--:-- IST</div>
+    <div id="mkt" class="mkt">market: loading\u2026</div>
+  </header>
+
+  <!-- install prompt (PWA) -->
+  <div id="install" class="toast hidden">
+    Install this app: tap <b>"Add to Home Screen"</b> in Chrome (one link, app icon on your tablet).
+    <button class="btn ghost" id="dismiss">Later</button>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="market" role="tab" aria-selected="true">Market</button>
+    <button class="tab" data-tab="scanner" role="tab">Scanner</button>
+    <button class="tab" data-tab="trade" role="tab">Trade</button>
+    <button class="tab" data-tab="positions" role="tab">Positions</button>
+    <button class="tab" data-tab="alerts" role="tab">Alerts</button>
+    <button class="tab" data-tab="settings" role="tab">Settings</button>
+  </nav>
+
+  <main class="panels">
+    <!-- MARKET -->
+    <section id="panel-market" class="panel active">
+      <h2>Indian market clock <span id="mkt-label"></span></h2>
+      <p class="muted">NSE equity / F&amp;O session: 09:15\u201315:30 IST. Weekend & holiday aware.</p>
+      <div class="card grid2">
+        <div class="kpi"><div class="kpi-label">NSE session</div><div class="kpi-value" id="kpi-session">\u2026</div></div>
+        <div class="kpi"><div class="kpi-label">Next event</div><div class="kpi-value" id="kpi-next">\u2026</div></div>
+        <div class="kpi"><div class="kpi-label">Data mode</div><div class="kpi-value" id="kpi-mode">demo/simulated</div></div>
+        <div class="kpi"><div class="kpi-label">Tablet</div><div class="kpi-value" id="kpi-tablet">Lenovo Yoga</div></div>
+      </div>
+      <p class="muted">Prices come from Yahoo Finance (.NS / .BO) when online; otherwise this app runs in simulated/demo mode so every button still works.</p>
+    </section>
+
+    <!-- SCANNER -->
+    <section id="panel-scanner" class="panel">
+      <h2>Opening-range scanner <button class="btn small" id="scan-run">Scan Nifty 50</button></h2>
+      <p class="muted">First-15-minute range (09:15\u201309:30 IST); flags 5-minute closes above the range high. Longs only.</p>
+      <div id="scan-list" class="list">Tap <b>Scan Nifty 50</b> to fetch today's bars.</div>
+    </section>
+
+    <!-- TRADE -->
+    <section id="panel-trade" class="panel">
+      <h2>Trade planner</h2>
+      <div class="card">
+        <label>Symbol (e.g. <b>RELIANCE</b> or <b>RELIANCE.NS</b>)</label>
+        <input type="text" id="sym" value="RELIANCE" maxlength="12">
+        <button class="btn" id="quote-get">Get quote</button>
+      </div>
+      <div id="quote-box" class="card hidden">
+        <div id="quote-detail"></div>
+        <div class="row3">
+          <div><label>Entry price \u20B9</label><input type="number" id="ep" step="0.05"></div>
+          <div><label>Range high \u20B9</label><input type="number" id="rh" step="0.05"></div>
+          <div><label>Range low \u20B9</label><input type="number" id="rl" step="0.05"></div>
+        </div>
+        <div class="row2">
+          <div><label>Account cash \u20B9</label><input type="number" id="cash" value="50000" step="1000"></div>
+          <div><label>Max loss / trade \u20B9</label><input type="number" id="mloss" value="1000" step="100"></div>
+        </div>
+        <button class="btn" id="plan-build">Build plan (stop / target / size)</button>
+      </div>
+      <div id="plan-out" class="card hidden"></div>
+      <div class="card">
+        <button class="btn" id="order-place" style="display:none">Place PAPER buy order</button>
+      </div>
+      <p class="muted">Nothing is ever sent to a real broker from here. Paper orders only. Verify every price with your broker before acting.</p>
+    </section>
+
+    <!-- POSITIONS -->
+    <section id="panel-positions" class="panel">
+      <h2>Paper positions &amp; orders</h2>
+      <div id="pos-list" class="list">No positions yet.</div>
+      <div id="ord-list" class="list">No orders yet.</div>
+      <div class="card">
+        <label>Flat symbol at price (end of day)</label>
+        <div class="row2">
+          <div><label>Symbol</label><input type="text" id="flat-sym"></div>
+          <div><label>Price \u20B9</label><input type="number" id="flat-px" step="0.05"></div>
+        </div>
+        <button class="btn" id="flat-go">Flat position</button>
+      </div>
+    </section>
+
+    <!-- ALERTS -->
+    <section id="panel-alerts" class="panel">
+      <h2>Price alerts</h2>
+      <p class="muted">Stop / target rings when the price crosses the level. Each alert rings once.</p>
+      <div class="card">
+        <div class="row3">
+          <div><label>Symbol</label><input type="text" id="al-sym"></div>
+          <div><label>Type</label><select id="al-type"><option>stop</option><option>target</option></select></div>
+          <div><label>Level \u20B9</label><input type="number" id="al-lvl" step="0.05"></div>
+        </div>
+        <button class="btn" id="al-add">Add alert</button>
+      </div>
+      <div id="al-list" class="list">No alerts.</div>
+      <div id="al-ring" class="ring hidden"></div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section id="panel-settings" class="panel">
+      <h2>Settings</h2>
+      <div class="card">
+        <label><input type="checkbox" id="demo-toggle"> Demo / simulated prices (no network)</label>
+        <p class="muted">On: prices move by simulation so you can tap every button offline. Off: tries Yahoo Finance (.NS) first.</p>
+      </div>
+      <div class="card">
+        <label>Watchlist symbols (comma separated, e.g. RELIANCE,TCS,INFY.NS)</label>
+        <textarea id="watchlist" rows="3">RELIANCE,TCS,HDFCBANK,INFY,ICICIBANK,SBIN,LT,AXISBANK</textarea>
+      </div>
+      <div class="card">
+        <label>Max trades per day</label><input type="number" id="max-trades" value="5">
+        <label>Max daily loss \u20B9</label><input type="number" id="max-day-loss" value="2000">
+      </div>
+      <p class="muted">Not financial advice. Day trading loses money for most people. Data is free, unofficial and can lag.</p>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

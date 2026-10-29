@@ -1,0 +1,3 @@
+# TraderAPK Python core — standard library only; nothing to pip install.
+# Run: python3 -m core.scanner  (after adding your symbols)
+# yfinance would give pandas convenience, but this core uses urllib only.
